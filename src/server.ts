@@ -1,10 +1,23 @@
 import app from "./app";
+import { prisma } from "./lib/prisma";
 
 const PORT = process.env.PORT || 5000;
 
 
-export default function server() {
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-  });
-}
+export default async function server() {
+  try {
+    await prisma.$connect();
+    console.log("Database connected successfully");
+
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to connect to the database:", error);
+    await prisma.$disconnect();
+    process.exit(1);
+  }
+};
+
+
+server();

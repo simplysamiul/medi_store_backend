@@ -1,0 +1,94 @@
+import { Request, Response } from "express"
+import { medicineService } from "./medicine.service"
+
+const postMedicine = async (req: Request, res: Response) => {
+    try {
+        const result = await medicineService.postMedicine(req.body);
+        console.log(result)
+        res.status(201).json({
+            success: true,
+            message: "Medicine inserted successfully..!",
+            data: result,
+            error: null
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Medicine inserted failed..!",
+            data: null,
+            error: error
+        })
+    }
+};
+
+
+const getAllMedicine = async (req: Request, res: Response) => {
+    try {
+        const result = await medicineService.getAllMedicine();
+        res.status(201).json({
+            success: true,
+            message: "Medicine retrive  successfully..!",
+            data: result,
+            error: null
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Medicine retrive failed..!",
+            data: null,
+            error: error
+        })
+    }
+};
+
+
+const getMedicineById = async (req: Request, res: Response) => {
+    try {
+        const {medicineId} = req.params;
+        const result = await medicineService.getMedicineById(medicineId as string);
+        res.status(201).json({
+            success: true,
+            message: "Medicine retrive  successfully..!",
+            data: result,
+            error: null
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Medicine retrive failed..!",
+            data: null,
+            error: error
+        })
+    }
+};
+
+
+const deleteMedicineById = async (req: Request, res: Response) => {
+    try {
+        const {medicineId} = req.params;
+        const result = await medicineService.deleteMedicineById(medicineId as string);
+        res.status(201).json({
+            success: true,
+            message: "Medicine deleted  successfully..!",
+            data: result,
+            error: null
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Medicine deleted failed..!",
+            data: null,
+            error: error
+        })
+    }
+};
+
+
+
+
+export const medicineController = {
+    postMedicine,
+    getAllMedicine,
+    getMedicineById,
+    deleteMedicineById
+}

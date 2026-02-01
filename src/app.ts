@@ -3,10 +3,18 @@ import cors from 'cors'
 import medicineRouter from './modules/medicine/medicine.router';
 import { CategoryRouter } from './modules/category/category.route';
 import { ReviewRoutes } from './modules/review/review.router';
+import { toNodeHandler } from "better-auth/node";
+import { auth } from './lib/auth';
 
 const app: Application = express();
 
-app.use(cors());
+app.use(cors({
+    origin: process.env.CLIENT_URL ||"http://localhost:3000",
+    credentials: true,
+}));
+
+// user authentication route from better auth
+app.all("/api/auth/*splat", toNodeHandler(auth));
 app.use(express.json());
 
 // root route
@@ -22,6 +30,7 @@ app.use("/api/categories", CategoryRouter);
 
 // reviews route
 app.use("/api/review", ReviewRoutes)
+
 
 
 

@@ -120,6 +120,7 @@ model Review {
 }
 
 // Auth models
+
 model User {
   id            String    @id
   name          String
@@ -136,6 +137,7 @@ model User {
 }
 
 // Session model
+
 model Session {
   id        String   @id
   expiresAt DateTime
@@ -153,6 +155,7 @@ model Session {
 }
 
 // Account model
+
 model Account {
   id                    String    @id
   accountId             String
@@ -174,6 +177,7 @@ model Account {
 }
 
 // Verification model
+
 model Verification {
   id         String   @id
   identifier String

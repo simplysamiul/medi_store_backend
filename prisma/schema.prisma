@@ -14,6 +14,7 @@ datasource db {
 }
 
 // medicine model
+
 model Medicine {
   id             String      @id @default(uuid())
   med_name       String      @db.VarChar(50)
@@ -38,6 +39,7 @@ model Medicine {
 }
 
 // category model 
+
 model Category {
   id            String     @id @default(uuid())
   category_name String     @db.VarChar(50)
@@ -51,6 +53,7 @@ model Category {
 }
 
 // Order model
+
 model Order {
   id               String        @id @default(uuid())
   customer_id      String
@@ -68,6 +71,7 @@ model Order {
 }
 
 // Order model enum
+
 enum PaymentMethod {
   Cash_On_Delivery
   sslcommerz
@@ -85,6 +89,7 @@ enum OrderStatus {
 }
 
 // Order item
+
 model OrderItem {
   id                String   @id @default(uuid())
   order_id          String
@@ -99,6 +104,7 @@ model OrderItem {
 }
 
 // Reviews 
+
 model Review {
   id          String   @id @default(uuid())
   medicine_id String
@@ -111,4 +117,71 @@ model Review {
   @@index([medicine_id])
   @@index([customer_id])
   @@map("reviews")
+}
+
+// Auth models
+model User {
+  id            String    @id
+  name          String
+  email         String
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+// Session model
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
+}
+
+// Account model
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+// Verification model
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
 }

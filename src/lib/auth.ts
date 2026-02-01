@@ -11,6 +11,6 @@ export const auth = betterAuth({
         enabled: true,
     },
     advanced: {
-        disableOriginCheck: true
+        disableOriginCheck: process.env.NODE_ENV !== "production" ? true : false
     }
 });

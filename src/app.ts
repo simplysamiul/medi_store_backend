@@ -2,6 +2,7 @@ import express, { Application } from 'express';
 import cors from 'cors'
 import medicineRouter from './modules/medicine/medicine.router';
 import { CategoryRouter } from './modules/category/category.route';
+import { ReviewRoutes } from './modules/review/review.router';
 
 const app: Application = express();
 
@@ -17,7 +18,10 @@ app.get("/", (req, res) => {
 app.use("/api/medicines", medicineRouter);
 
 // categories route
-app.use("/api/categories", CategoryRouter)
+app.use("/api/categories", CategoryRouter);
+
+// reviews route
+app.use("/api/review", ReviewRoutes)
 
 
 

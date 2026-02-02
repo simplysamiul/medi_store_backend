@@ -119,6 +119,12 @@ model Review {
   @@map("reviews")
 }
 
+enum UserRole {
+  CUSTOMER
+  SELLER
+  ADMIN
+}
+
 // Auth models
 
 model User {
@@ -132,9 +138,9 @@ model User {
   sessions      Session[]
   accounts      Account[]
 
-  role   String? @default("CUSTOMER")
+  role   UserRole @default(CUSTOMER)
   phone  String?
-  status String? @default("ACTIVE")
+  status String?  @default("ACTIVE")
 
   @@unique([email])
   @@map("user")

@@ -28,8 +28,7 @@ export const auth = betterAuth({
     },
     emailAndPassword: {
         enabled: true,
+        autoSignIn:false,
+        requireEmailVerification:false
     },
-    // advanced: {
-    //     disableOriginCheck: process.env.NODE_ENV !== "production" ? true : false
-    // }
 });

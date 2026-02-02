@@ -3,7 +3,12 @@ import { medicineService } from "./medicine.service"
 
 const postMedicine = async (req: Request, res: Response) => {
     try {
-        const result = await medicineService.postMedicine(req.body);
+        if(!req.user){
+            return res.status(400).json({
+                error: "Unauthorized access ..!"
+            })
+        }
+        const result = await medicineService.postMedicine(req.body, req.user.id as string);
         console.log(result)
         res.status(201).json({
             success: true,

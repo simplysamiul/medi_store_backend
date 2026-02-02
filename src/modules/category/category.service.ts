@@ -4,7 +4,7 @@ import { prisma } from "../../lib/prisma";
 
 const createCategory = async (data: Omit<Category, "id" | "created_at" | "updated_at ">) => {
     return prisma.category.create({
-        data,
+        data
     });
 };
 

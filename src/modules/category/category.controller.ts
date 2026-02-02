@@ -4,7 +4,6 @@ import { CategoryService } from "./category.service";
 const createCategory = async (req: Request, res: Response) => {
   try {
     const result = await CategoryService.createCategory(req.body);
-    console.log(result)
     res.status(201).json({
       success: true,
       message: "Category created successfully",

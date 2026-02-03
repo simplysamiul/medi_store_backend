@@ -29,7 +29,9 @@ const postMedicine = async (req: Request, res: Response) => {
 
 const getAllMedicine = async (req: Request, res: Response) => {
     try {
-        const result = await medicineService.getAllMedicine();
+        const {search} = req.query;
+        const searchString = typeof search === 'string' ? search : undefined;
+        const result = await medicineService.getAllMedicine({search:searchString});
         res.status(201).json({
             success: true,
             message: "Medicine retrive  successfully..!",

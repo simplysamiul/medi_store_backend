@@ -1,19 +1,36 @@
 import { Medicine } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 
-const postMedicine = async (data: Omit<Medicine, "id" | "seller_id">, userId:string) => {
+const postMedicine = async (data: Omit<Medicine, "id" | "seller_id">, userId: string) => {
     const result = await prisma.medicine.create({
         data: {
             ...data,
-            seller_id:userId,
+            seller_id: userId,
         }
 
     });
     return result;
 };
 
-const getAllMedicine = async () => {
-    const result = await prisma.medicine.findMany();
+const getAllMedicine = async (payload: { search?: string | undefined }) => {
+    const result = await prisma.medicine.findMany({
+        where: {
+            OR: [
+                {
+                    med_name: {
+                        contains: payload.search as string,
+                        mode: 'insensitive'
+                    }
+                },
+                {
+                    manufacturer: {
+                        contains: payload.search as string,
+                        mode: 'insensitive'
+                    }
+                }
+            ]
+        }
+    });
     return result;
 };
 

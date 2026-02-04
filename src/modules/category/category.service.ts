@@ -8,8 +8,14 @@ const createCategory = async (data: Omit<Category, "id" | "created_at" | "update
     });
 };
 
-const getAllCategories = async () => {
+const getAllCategories = async (payload: { search?: string | undefined }) => {
     return prisma.category.findMany({
+        where: {
+            category_name: {
+                contains: payload.search as string,
+                mode: 'insensitive'
+            }
+        },
         orderBy: { created_at: "desc" },
     });
 };

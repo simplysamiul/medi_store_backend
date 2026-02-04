@@ -22,8 +22,9 @@ const createCategory = async (req: Request, res: Response) => {
 
 const getAllCategories = async (req: Request, res: Response) => {
   try {
-    const result = await CategoryService.getAllCategories();
-
+    const { search } = req.query;
+    const searchString = typeof search === 'string' ? search : undefined;
+    const result = await CategoryService.getAllCategories({search:searchString});
     res.status(200).json({
       success: true,
       message: "Categories retrive successfully",

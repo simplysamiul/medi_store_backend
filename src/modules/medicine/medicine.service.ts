@@ -12,27 +12,33 @@ const postMedicine = async (data: Omit<Medicine, "id" | "seller_id">, userId: st
     return result;
 };
 
-const getAllMedicine = async (payload: { search?: string | undefined }) => {
+const getAllMedicine = async (payload: { search?: string }) => {
+    const search = payload.search?.trim();
+
     const result = await prisma.medicine.findMany({
-        where: {
-            OR: [
-                {
-                    med_name: {
-                        contains: payload.search as string,
-                        mode: 'insensitive'
-                    }
-                },
-                {
-                    manufacturer: {
-                        contains: payload.search as string,
-                        mode: 'insensitive'
-                    }
-                }
-            ]
-        }
+        ...(search && {
+            where: {
+                OR: [
+                    {
+                        med_name: {
+                            contains: search,
+                            mode: "insensitive",
+                        },
+                    },
+                    {
+                        manufacturer: {
+                            contains: search,
+                            mode: "insensitive"
+                        },
+                    },
+                ],
+            },
+        }),
     });
+
     return result;
 };
+
 
 const getMedicineById = async (id: string) => {
     const result = await prisma.medicine.findUnique({

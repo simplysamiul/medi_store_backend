@@ -50,6 +50,16 @@ const getMedicineById = async (id: string) => {
 };
 
 
+const updateMedicineById =  async(id:string, data:Partial<Medicine>)=>{
+    return prisma.medicine.update({
+        where: {
+            id
+        },
+        data
+    })
+}
+
+
 const deleteMedicineById = async (id: string) => {
     const result = await prisma.medicine.delete({
         where: {
@@ -63,10 +73,10 @@ const deleteMedicineById = async (id: string) => {
 
 
 
-
 export const medicineService = {
     postMedicine,
     getAllMedicine,
     getMedicineById,
+    updateMedicineById,
     deleteMedicineById
 }

@@ -32,7 +32,7 @@ const getAllMedicine = async (req: Request, res: Response) => {
         const result = await medicineService.getAllMedicine(
             typeof search === 'string'
                 ? { search }
-                : {} 
+                : {}
         );
         res.status(201).json({
             success: true,
@@ -71,6 +71,29 @@ const getMedicineById = async (req: Request, res: Response) => {
     }
 };
 
+const updateMedicineById = async (req: Request, res: Response) => {
+    try {
+        const result = await medicineService.updateMedicineById(
+            req.params.medicineId as string,
+            req.body
+        );
+
+        res.status(200).json({
+            success: true,
+            message: "Medicine updated successfully",
+            data: result,
+            error: null,
+        });
+    } catch (error: any) {
+        res.status(400).json({
+            success: false,
+            message: "Failed to update medicine",
+            data: null,
+            error: error.message,
+        });
+    }
+}
+
 
 const deleteMedicineById = async (req: Request, res: Response) => {
     try {
@@ -99,5 +122,6 @@ export const medicineController = {
     postMedicine,
     getAllMedicine,
     getMedicineById,
+    updateMedicineById,
     deleteMedicineById
 }

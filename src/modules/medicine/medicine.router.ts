@@ -8,6 +8,7 @@ const medicineRouter = express.Router();
 medicineRouter.post("/", auth(UserRole.SELLER), medicineController.postMedicine);
 medicineRouter.get("/", medicineController.getAllMedicine);
 medicineRouter.get("/:medicineId", medicineController.getAllMedicine);
+medicineRouter.patch("/:medicineId",auth(UserRole.ADMIN), medicineController.updateMedicineById);
 medicineRouter.delete("/:medicineId",auth(UserRole.SELLER, UserRole.ADMIN), medicineController.deleteMedicineById);
 
 export default medicineRouter;

@@ -75,7 +75,8 @@ const updateMedicineById = async (req: Request, res: Response) => {
     try {
         const result = await medicineService.updateMedicineById(
             req.params.medicineId as string,
-            req.body
+            req.body, 
+            req.user?.id as string
         );
 
         res.status(200).json({
@@ -98,7 +99,7 @@ const updateMedicineById = async (req: Request, res: Response) => {
 const deleteMedicineById = async (req: Request, res: Response) => {
     try {
         const { medicineId } = req.params;
-        const result = await medicineService.deleteMedicineById(medicineId as string);
+        const result = await medicineService.deleteMedicineById(medicineId as string, req.user?.id as string);
         res.status(201).json({
             success: true,
             message: "Medicine deleted  successfully..!",

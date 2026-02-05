@@ -50,7 +50,22 @@ const getMedicineById = async (id: string) => {
 };
 
 
-const updateMedicineById =  async(id:string, data:Partial<Medicine>)=>{
+const updateMedicineById = async (id: string, data: Partial<Medicine>, userId: string) => {
+
+    const medicine = await prisma.medicine.findUniqueOrThrow({
+        where: {
+            id: id
+        },
+        select: {
+            id: true,
+            seller_id: true
+        }
+    })
+
+    if (medicine.seller_id !== userId) {
+        throw new Error("You are not the seller of this medicine")
+    }
+
     return prisma.medicine.update({
         where: {
             id
@@ -60,7 +75,21 @@ const updateMedicineById =  async(id:string, data:Partial<Medicine>)=>{
 }
 
 
-const deleteMedicineById = async (id: string) => {
+const deleteMedicineById = async (id: string, sellerId:string) => {
+
+    const medicine = await prisma.medicine.findUniqueOrThrow({
+        where: {
+            id: id
+        },
+        select: {
+            id: true,
+            seller_id: true
+        }
+    })
+
+    if (medicine.seller_id !== sellerId) {
+        throw new Error("You are not the seller of this medicine")
+    }
     const result = await prisma.medicine.delete({
         where: {
             id

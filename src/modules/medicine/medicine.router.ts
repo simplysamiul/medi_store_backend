@@ -7,8 +7,8 @@ const medicineRouter = express.Router();
 // post a medicine 
 medicineRouter.post("/", auth(UserRole.SELLER), medicineController.postMedicine);
 medicineRouter.get("/", medicineController.getAllMedicine);
-medicineRouter.get("/:medicineId", medicineController.getAllMedicine);
-medicineRouter.patch("/:medicineId",auth(UserRole.ADMIN), medicineController.updateMedicineById);
-medicineRouter.delete("/:medicineId",auth(UserRole.SELLER, UserRole.ADMIN), medicineController.deleteMedicineById);
+medicineRouter.get("/:medicineId", medicineController.getMedicineById);
+medicineRouter.patch("/:medicineId",auth(UserRole.SELLER), medicineController.updateMedicineById);
+medicineRouter.delete("/:medicineId",auth(UserRole.SELLER), medicineController.deleteMedicineById);
 
 export default medicineRouter;

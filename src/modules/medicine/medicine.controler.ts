@@ -3,6 +3,8 @@ import { medicineService } from "./medicine.service"
 
 const postMedicine = async (req: Request, res: Response) => {
     try {
+        console.log(req.body)
+        console.log(req.user?.id)
         if (!req.user) {
             return res.status(400).json({
                 error: "Unauthorized access ..!"

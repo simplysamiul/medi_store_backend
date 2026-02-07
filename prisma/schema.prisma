@@ -25,6 +25,7 @@ model Medicine {
   image_url      String
   seller_id      String
   category_id    String
+  price          String?
   category       Category    @relation(fields: [category_id], references: [id])
   is_active      Boolean     @default(true)
   created_at     DateTime    @default(now())

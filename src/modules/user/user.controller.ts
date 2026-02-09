@@ -48,8 +48,68 @@ const getUserById = async (req: Request, res: Response) => {
     }
 };
 
+const updateUserById = async (req: Request, res: Response) => {
+    try {
+        const userId = req.params.id;
+        if (!userId) {
+            res.status(500).json({
+                success: false,
+                message: "Please provide valid useer id..!",
+                data: null,
+            })
+        }
+
+        const user = await userService.updateUserById(req.body, userId as string);
+
+        res.status(200).json({
+            success: true,
+            message: "User delete successfully..!",
+            data: user,
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "User delete failed..!",
+            data: null,
+            error: error
+        })
+    }
+};
+
+
+const deleteUserById = async (req: Request, res: Response) => {
+    try {
+        const userId = req.params.id;
+        if (!userId) {
+            res.status(500).json({
+                success: false,
+                message: "Please provide valid useer id..!",
+                data: null,
+            })
+        }
+
+        const user = await userService.deleteUserById(userId as string);
+
+        res.status(200).json({
+            success: true,
+            message: "User delete successfully..!",
+            data: user,
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "User delete failed..!",
+            data: null,
+            error: error
+        })
+    }
+};
+
 
 export const userController = {
     getUsers,
-    getUserById
+    getUserById,
+    deleteUserById,
+    updateUserById
+
 }

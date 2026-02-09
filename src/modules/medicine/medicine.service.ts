@@ -31,6 +31,12 @@ const getAllMedicine = async (payload: { search?: string }) => {
                             mode: "insensitive"
                         },
                     },
+                    {
+                        seller_id: {
+                            contains: search,
+                            mode: "insensitive"
+                        },
+                    },
                 ],
             },
         }),
@@ -75,7 +81,7 @@ const updateMedicineById = async (id: string, data: Partial<Medicine>, userId: s
 }
 
 
-const deleteMedicineById = async (id: string, sellerId:string) => {
+const deleteMedicineById = async (id: string, sellerId: string) => {
 
     const medicine = await prisma.medicine.findUniqueOrThrow({
         where: {

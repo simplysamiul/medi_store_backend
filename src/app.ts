@@ -5,6 +5,7 @@ import { CategoryRouter } from './modules/category/category.route';
 import { ReviewRoutes } from './modules/review/review.router';
 import { toNodeHandler } from "better-auth/node";
 import { auth } from './lib/auth';
+import { userRouter } from './modules/user/user.router';
 
 const app: Application = express();
 
@@ -30,6 +31,9 @@ app.use("/api/categories", CategoryRouter);
 
 // reviews route
 app.use("/api/review", ReviewRoutes)
+
+// user route
+app.use("/api/users", userRouter)
 
 
 

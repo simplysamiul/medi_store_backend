@@ -31,7 +31,6 @@ model Medicine {
   created_at     DateTime    @default(now())
   updated_at     DateTime    @updatedAt
   reviews        Review[]
-  orderItems     OrderItem[]
 
   @@index([med_name])
   @@index([manufacturer])
@@ -59,12 +58,12 @@ model Order {
   id               String        @id @default(uuid())
   customer_id      String
   total_amount     String
-  shipping_address String
+  shipping_address Json
+  orderItems       Json
   payment_method   PaymentMethod @default(Cash_On_Delivery)
   status           OrderStatus   @default(placed)
   created_at       DateTime      @default(now())
   updated_at       DateTime      @updatedAt
-  orderItems       OrderItem[]
 
   @@index([customer_id])
   @@index([status])
@@ -87,21 +86,6 @@ enum OrderStatus {
   shipped
   delivered
   cancelled
-}
-
-// Order item
-
-model OrderItem {
-  id                String   @id @default(uuid())
-  order_id          String
-  order             Order    @relation(fields: [order_id], references: [id])
-  medicine_id       String
-  medicine          Medicine @relation(fields: [medicine_id], references: [id])
-  seller_id         String
-  quantity          String
-  price_at_purchase String
-  created_at        DateTime @default(now())
-  updated_at        DateTime @updatedAt
 }
 
 // Reviews 

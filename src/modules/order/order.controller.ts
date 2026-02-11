@@ -48,6 +48,26 @@ const getAllOrder = async (req: Request, res: Response) => {
     }
 };
 
+const getOrderById = async (req: Request, res: Response) => {
+    try {
+        const customerId = req.params.customerId;
+        const result = await orderService.getOrderById(customerId as string);
+        res.status(201).json({
+            success: true,
+            message: "Order retrive successfully..!",
+            data: result,
+            error: null
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Order retrive failed..!",
+            data: null,
+            error: error
+        })
+    }
+};
+
 const UpdateOrder = async (req: Request, res: Response) => {
     try {
         const orderId = req.params.id;
@@ -75,5 +95,6 @@ const UpdateOrder = async (req: Request, res: Response) => {
 export const orderController = {
     createOrder,
     getAllOrder,
-    UpdateOrder
+    UpdateOrder,
+    getOrderById
 }

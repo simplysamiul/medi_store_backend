@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ReviewRoutes = void 0;
+var express_1 = require("express");
+var review_controller_1 = require("./review.controller");
+exports.ReviewRoutes = (0, express_1.Router)();
+exports.ReviewRoutes.post("/", review_controller_1.ReviewController.createReview);
+exports.ReviewRoutes.get("/", review_controller_1.ReviewController.getAllReviews);
+exports.ReviewRoutes.get("/:id", review_controller_1.ReviewController.getReviewById);
+exports.ReviewRoutes.delete("/:id", review_controller_1.ReviewController.deleteReviewById);

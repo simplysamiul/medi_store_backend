@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CategoryRouter = void 0;
+var express_1 = require("express");
+var category_controller_1 = require("./category.controller");
+var auth_middleware_1 = require("../../middleware/auth.middleware");
+exports.CategoryRouter = (0, express_1.Router)();
+exports.CategoryRouter.post("/", category_controller_1.CategoryController.createCategory);
+exports.CategoryRouter.get("/", category_controller_1.CategoryController.getAllCategories);
+exports.CategoryRouter.get("/:id", category_controller_1.CategoryController.getCategoryById);
+exports.CategoryRouter.patch("/:id", (0, auth_middleware_1.default)(auth_middleware_1.UserRole.ADMIN), category_controller_1.CategoryController.updateCategory);
+exports.CategoryRouter.delete("/:id", (0, auth_middleware_1.default)(auth_middleware_1.UserRole.ADMIN), category_controller_1.CategoryController.deleteCategory);

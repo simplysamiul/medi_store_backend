@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.orderRouter = void 0;
+var express_1 = require("express");
+var order_controller_1 = require("./order.controller");
+var auth_middleware_1 = require("../../middleware/auth.middleware");
+exports.orderRouter = express_1.default.Router();
+exports.orderRouter.post("/", order_controller_1.orderController.createOrder);
+exports.orderRouter.get("/", (0, auth_middleware_1.default)(auth_middleware_1.UserRole.ADMIN), order_controller_1.orderController.getAllOrder);
+exports.orderRouter.get("/:customerId", order_controller_1.orderController.getOrderById);
+exports.orderRouter.patch("/:id", (0, auth_middleware_1.default)(auth_middleware_1.UserRole.ADMIN), order_controller_1.orderController.UpdateOrder);
